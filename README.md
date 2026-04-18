@@ -21,20 +21,3 @@ The core objective is to build a "Think-Act-Observe" loop where the LLM can:
 * **Package Manager:** [uv](https://github.com/astral-sh/uv)
 * **Libraries:** * `google-genai==1.12.1`
     * `python-dotenv==1.1.0`
-
-## ⚙️ Getting Started
-
-### 1. Prerequisites
-* A [Google AI Studio](https://aistudio.google.com/) API Key.
-* `uv` installed on your system.
-
-### 2. Installation & Setup
-```bash
-# Clone the repository
-git clone [https://github.com/your-username/agent-project.git](https://github.com/your-username/agent-project.git)
-cd agent-project
-
-# Initialize project and add dependencies
-uv init
-uv add google-genai==1.12.1
-uv add python-dotenv==1.1.0
