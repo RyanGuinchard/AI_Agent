@@ -21,3 +21,44 @@ def call_function(function_call, verbose=False):
         "write_file": write_file,
         "run_python_file": run_python_file
     }
+
+    function_name = function_call.name or ""
+
+    if function_name not in function_map:
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"error": f"Unknown function: {function_name}"},
+                )
+            ],
+        )
+    
+    args = dict(function_call.args) if function_call.args else {}
+
+    # Set working directory for scope of project
+    args["working_directory"] = "./calculator"
+
+    # Attempt to call the function and handle any exceptions that may occur
+    try:
+        function_result = function_map[function_name](**args)
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_result},
+                )
+            ],
+        )
+    except Exception as e:
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"error": str(e)},
+                )
+            ],
+        )
